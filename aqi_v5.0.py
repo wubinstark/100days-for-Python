@@ -16,18 +16,19 @@ def get_city_url(url):
 
     # 解析网站之后，去寻找想要的数据
     if soup.find('div', {'class': 'caption'}).text.strip() == 'AQI':
-        aqi_val = soup.find('div', {'class': 'value'}).text.strip()
+        aqi_val = [soup.find('div', {'class': 'value'}).text.strip(),
+                   soup.find('div', {'class': 'city_name'}).text.strip()]
     return aqi_val
 
 
 def main():
     # 要求用户输入城市全拼，并拼接成URL
-    city_name = input('请输入城市的全拼：')
-    url = 'http://pm25.in/' + city_name
-    aqi_val = get_city_url(url)
-
-    print('所在城市对应的AQI为：{}'.format(aqi_val))
-
+    city_name = 0
+    while city_name != 'over':
+        city_name = input('请输入城市的全拼：')
+        url = 'http://pm25.in/' + city_name
+        aqi_val = get_city_url(url)
+        print('{0[1]}的AQI为：{0[0]}\n'.format(aqi_val))
 
 if __name__ == '__main__':
     main()
