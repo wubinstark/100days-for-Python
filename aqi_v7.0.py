@@ -19,6 +19,7 @@ def get_city_aqi(pinyin):
     soup = BeautifulSoup(r.text, 'lxml')
 
     # 解析网站之后，去寻找想要的数据
+    # find_all 是拿到相应div中的所有值，并不是拿到解析网页中的所有div
     aqi_list = soup.find_all('div', {'class': "span1"})
     i = 0
     aqi_val = []
@@ -46,7 +47,7 @@ def get_all_city():
 def main():
     city_list = get_all_city()
     # 创建表头
-    header = ['城市''AQI', 'PM2.5', 'PM10', 'CO', 'NO2', 'O3/1h', 'O3/8h', 'SO2']
+    header = ['城市', 'AQI', 'PM2.5', 'PM10', 'CO', 'NO2', 'O3/1h', 'O3/8h', 'SO2']
     with open('china_city_aqi.csv', 'w', newline='', encoding='utf-8') as f:
         xxx = csv.writer(f)
         # 写入表头
@@ -55,9 +56,10 @@ def main():
         for city in city_list:
             city_name = city[0]
             city_aqi = get_city_aqi(city[1])
-            print(city_name,city_aqi)
+            print(city_name, city_aqi)
             row = [city_name] + city_aqi
             xxx.writerow(row)
+
 
 if __name__ == '__main__':
     main()
