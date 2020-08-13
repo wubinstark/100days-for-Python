@@ -1,12 +1,9 @@
-import requests
+import re
 
-def main():
-    response = requests.get('http://old.ibos.ixuenong.com/')
-    print(response.status_code)
-    print(type(response))
-    print(response.text)
-    # print(response.cookies)
-    # print(response.headers)
+content = 'price is $5.00'
+print(len(content))
+result = re.match('^price is \$5\.00$',content)
+print(result)
+# print(result.group(1))
+# print(result.span())
 
-if __name__ == '__main__':
-    main()
